@@ -11,7 +11,6 @@ package algorithms;
  * @author boaz.benmoshe
  *
  */
-
 import java.util.List;
 
 import dataStructure.graph;
@@ -40,7 +39,7 @@ public interface graph_algorithms {
 	public void save(String file_name);
 /**
  * Returns true if and only if (iff) there is a valid path from EVREY node to each
- * other node. NOTE: assume directional graph - a valid path (a-->b) does NOT imply a valid path (b-->a).
+ +* other node. NOTE: assume directional graph - a valid path (a-->b) does NOT imply a valid path (b-->a).
  * @return
  */
 	public boolean isConnected();

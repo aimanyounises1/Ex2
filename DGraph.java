@@ -5,151 +5,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
-
+import java.util.Map;
 import utils.Point3D;
-
-class EdgeData implements edge_data {
-	int dest;
-	int source;
-	double weight;
-	int tag;
-
-	// Point3D c = new Point3D(dest.p.x()-1, dest.p.y()-1);
-	EdgeData(int sor, int d) {
-		this.dest = d;
-		this.source = sor;
-	
-	}
-	EdgeData(EdgeData other) {
-		this.dest = other.dest;
-		this.source = other.source;
-		this.weight = other.weight;
-	}
-
-	public EdgeData() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public int getSrc() {
-		// TODO Auto-generated method stub
-		return this.source;
-	}
-
-	@Override
-	public int getDest() {
-		// TODO Auto-generated method stub
-		return this.dest;
-	}
-
-	@Override
-	public double getWeight() {
-		// TODO Auto-generated method stub
-		return weight;
-	}
-
-	@Override
-	public String getInfo() {
-		// TODO Auto-generated method stub
-		return "(" + "weight is =" + this.weight + "source is =" + this.source + "destination is =" + this.dest;
-	}
-
-	@Override
-	public void setInfo(String s) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getTag() {
-		// TODO Auto-generated method stub
-		return tag;
-	}
-
-	@Override
-	public void setTag(int t) {
-		// TODO Auto-generated method stub
-		this.tag = t;
-	}
-
-}
-class NodeData implements node_data {
-	int id;
-	Point3D p;
-	int tag;
-	double weight;
-
-	// a constructor
-	NodeData(int id) {
-		this.id = id;
-		//this.tag = 0;
-	}
-	// copy construcor
-	NodeData(NodeData other) {
-		this.id = other.id;
-	}
-
-	@Override
-	public int getKey() {
-		// TODO Auto-generated method stub
-		return this.id;
-	}
-
-	@Override
-	public Point3D getLocation() {
-		// TODO Auto-generated method stub
-		return this.p;
-	}
-
-	@Override
-	public void setLocation(Point3D p) {
-		// TODO Auto-generated method stub
-		this.p = p;
-	}
-
-	@Override
-	public double getWeight() {
-		// TODO Auto-generated method stub
-		return weight;
-	}
-
-	@Override
-	public void setWeight(double w) {
-		// TODO Auto-generated method stub
-		this.weight = w;
-	}
-	@Override
-	public String getInfo() {
-		// TODO Auto-generated method stub
-		String s = "(" + this.id + "," + this.weight + "," + this.p.toString() + ")";
-		return s;
-	}
-
-	@Override
-	public void setInfo(String s) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public int getTag() {
-		// TODO Auto-generated method stub
-		return this.tag;
-	}
-
-	@Override
-	public void setTag(int t) {
-		// TODO Auto-generated method stub
-		this.tag = t;
-	}
-
-}
-
 public class DGraph implements graph {
-	// search by id
+	// search by id and des 
+	HashMap<Integer, EdgeData> inner;
+	HashMap<Integer, HashMap<Integer,EdgeData>> edges = new HashMap<>();
 	HashMap<Integer, NodeData> verticals = new HashMap<>();
-	HashMap<Integer, EdgeData> edges = new HashMap<>();
 	private NodeData d;
+	int changes;
 
 	@Override
 	public node_data getNode(int key) {
@@ -158,54 +24,57 @@ public class DGraph implements graph {
 		return node;
 	}
 	@Override
+	
 	public edge_data getEdge(int src, int dest) {
 		// TODO Auto-generated method stub
-		int key = src/dest;
-		EdgeData e = new EdgeData();
-		e = edges.get(key);
+		EdgeData e = null;
+		if(edges.get(src)!=null) {
+		 e =edges.get(src).get(dest);
+		}
 		return e;
 	}
 	@Override
 	public void addNode(node_data n) {
 		// TODO Auto-generated method stub
 		NodeData d = (NodeData) n;
-		verticals.put(d.id, d);
+		verticals.put(d.getId(),d);
 	}
-
 	@Override
 	public void connect(int src, int dest, double w) {
-		// TODO Auto-generated method stub
-		int key = src / dest;
+		// TODO Auto-generated met hod stub
 		EdgeData edge = new EdgeData(src,dest);
 		edge.weight = w;
-		edges.put(key, edge);
+		inner.put(dest, edge);
+		edges.put(src, inner);
 	}
 	@Override
 	public Collection<node_data> getV() {
 		// TODO Auto-generated method stub
-		return  null;
+		Collection<node_data> l = new ArrayList<>();
+		Iterator it = verticals.entrySet().iterator();
+		while(it.hasNext()) {
+			Map.Entry mapElement = (Map.Entry)it.next();
+			NodeData d = (NodeData) mapElement.getValue();
+			l.add(d);
+		}
+		return l;
 	}
-	@Override
-	public Collection<edge_data> getE(int node_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public node_data removeNode(int key) {
 		// TODO Auto-generated method stub
-		NodeData save = verticals.get(key);
-		verticals.remove(key);
-		return save;
+		NodeData d = verticals.get(key);
+		return d;
 	}
 	@Override
 	public edge_data removeEdge(int src, int dest) {
-		int key = src / dest;
-		EdgeData e = edges.get(key);
-		edges.remove(key);
+		EdgeData e = null;
+		if(edges.get(src)!=null) {
+			inner=edges.get(src);
+			 e = inner.remove(dest);
+			edges.put(src, inner);
+		}
 		return e;
 	}
-
 	@Override
 	public int nodeSize() {
 		// TODO Auto-generated method stub
@@ -220,7 +89,23 @@ public class DGraph implements graph {
 	@Override
 	public int getMC() {
 		// TODO Auto-generated method stub
-		return 0;
+		return changes;
+	}
+	@Override
+	public Collection<edge_data> getE(int node_id) {
+		// TODO Auto-generated method stub
+		Collection<edge_data> l = new ArrayList<edge_data>();
+		if(edges.get(node_id)!=null)
+		{
+		inner = (HashMap<Integer, EdgeData>) edges.values();
+		Iterator<Map.Entry<Integer, EdgeData>> itr = inner.entrySet().iterator();
+		while(itr.hasNext()) {
+			Map.Entry<Integer, EdgeData> entry = itr.next();
+			l.add(entry.getValue());
+		    }
+			
+		}
+		return l;
 	}
 
 }
