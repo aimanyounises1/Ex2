@@ -1,5 +1,8 @@
 package dataStructure;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import utils.Point3D;
 
 public class NodeData implements node_data {
@@ -7,19 +10,20 @@ public class NodeData implements node_data {
 	Point3D p;
 	int tag;
 	double weight;
-	double dest;
+	HashMap<Integer, NodeData> verticals = new HashMap<>();
 	// a constructor
-	public NodeData(int id) {
+	public NodeData(int id,Point3D p) {
 		this.setId(id);
-		//this.tag = 0;
+		this.weight=weight;
+		this.p=p;
 	}
-	public NodeData (int id ,double dis){
-		this.id=id;
-		this.dest = dis;
-	}
+
 	// copy construcor
 	NodeData(NodeData other) {
-		this.setId(other.getId());
+		this.id=other.id;
+		this.weight=other.weight;
+		this.p=other.p;
+		this.tag=other.tag;
 	}
 
 	@Override

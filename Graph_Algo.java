@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -56,12 +57,93 @@ public class Graph_Algo implements graph_algorithms {
 		// TODO Auto-generated method stub
 
 	}
+	
+	private  HashMap<Integer,NodeData> transfer()
+	{ HashMap<Integer,NodeData>h=new HashMap<Integer,NodeData>();
+	h=g.verticals;
+   	 
+    
+    return h;
+		
+	}
+	
+	public void setzero(HashMap<Integer,NodeData> m)
+	{
+		Iterator<Map.Entry<Integer, NodeData>> itr = m.entrySet().iterator();
+		while(itr.hasNext())
+		{
+			Map.Entry<Integer, NodeData>d=itr.next();
+			d.getValue().setTag(0);
+		}
 
+	}
+
+	public void checkNode(NodeData d,HashMap<Integer,NodeData> n)
+	{
+		
+			HashMap<Integer,EdgeData>m=g.edges.get(d.getId());
+			Iterator<Map.Entry<Integer, EdgeData>> itr = m.entrySet().iterator();
+			if(d.getTag()==0)
+			{
+
+			while(itr!=null)
+			{
+				Map.Entry<Integer, EdgeData>entry=itr.next();
+				n.get(entry.getValue().getDest()).setTag(1);
+				
+				
+			}
+			}
+
+
+		
+		
+	}
 	@Override
 	public boolean isConnected() {
-		// TODO Auto-generated method stub
-		return false;
+    HashMap<Integer,NodeData> l=transfer();
+    int c=0;
+	Iterator<Map.Entry<Integer, NodeData>> itr = l.entrySet().iterator();
+	while(itr.hasNext())
+	{
+		  setzero(l);
+		  c=0;
+
+		Map.Entry<Integer, NodeData>entry=itr.next();
+		entry.getValue().setTag(1);
+        checkNode(entry.getValue(),l);
+
+	Iterator<Map.Entry<Integer, NodeData>> itr2 = l.entrySet().iterator();
+	
+	while(itr2.hasNext())
+	{
+		Map.Entry<Integer, NodeData>entry2=itr2.next();
+		if(entry2.getValue().getTag()==1)
+		{
+			checkNode(entry2.getValue(),l);
+		}
 	}
+	
+	Iterator<Map.Entry<Integer, NodeData>> itr3 = l.entrySet().iterator();
+	while(itr3.hasNext())
+	{
+		Map.Entry<Integer, NodeData>etr=itr3.next();
+		if(etr.getValue().getTag()==1)
+			c++;
+	}
+	if(c<l.size())
+		return false;
+
+
+	}
+	return true;
+	
+
+	}
+
+    
+     
+	
 
 	@Override
 	public double shortestPathDist(int src, int dest) {

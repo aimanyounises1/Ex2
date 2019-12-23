@@ -14,7 +14,6 @@ public class DGraph implements graph {
 	HashMap<Integer, EdgeData> inner;
 	HashMap<Integer, HashMap<Integer,EdgeData>> edges = new HashMap<>();
 	HashMap<Integer, NodeData> verticals = new HashMap<>();
-	private NodeData d;
 	int changes;
 
 	@Override
@@ -42,8 +41,8 @@ public class DGraph implements graph {
 	@Override
 	public void connect(int src, int dest, double w) {
 		// TODO Auto-generated met hod stub
-		EdgeData edge = new EdgeData(src,dest);
-		edge.weight = w;
+		EdgeData edge = new EdgeData(src,dest,w);
+		inner=edges.get(src);
 		inner.put(dest, edge);
 		edges.put(src, inner);
 	}
@@ -63,6 +62,17 @@ public class DGraph implements graph {
 	public node_data removeNode(int key) {
 		// TODO Auto-generated method stub
 		NodeData d = verticals.get(key);
+		edges.remove(key);
+		Iterator<Map.Entry<Integer, HashMap<Integer,EdgeData>>> itr = edges.entrySet().iterator();
+
+		while(itr.hasNext())
+		{Map.Entry<Integer, HashMap<Integer,EdgeData>>entry=itr.next();
+		if(entry.getValue().get(key)!=null)
+		{entry.getValue().remove(key);
+		
+			
+		}
+		}
 		return d;
 	}
 	@Override
@@ -70,6 +80,7 @@ public class DGraph implements graph {
 		EdgeData e = null;
 		if(edges.get(src)!=null) {
 			inner=edges.get(src);
+			edges.remove(src);
 			 e = inner.remove(dest);
 			edges.put(src, inner);
 		}
@@ -97,7 +108,7 @@ public class DGraph implements graph {
 		Collection<edge_data> l = new ArrayList<edge_data>();
 		if(edges.get(node_id)!=null)
 		{
-		inner = (HashMap<Integer, EdgeData>) edges.values();
+		inner = edges.get(node_id);
 		Iterator<Map.Entry<Integer, EdgeData>> itr = inner.entrySet().iterator();
 		while(itr.hasNext()) {
 			Map.Entry<Integer, EdgeData> entry = itr.next();
