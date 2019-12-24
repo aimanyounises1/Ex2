@@ -6,16 +6,21 @@ import java.util.HashMap;
 import utils.Point3D;
 
 public class NodeData implements node_data {
-	private int id;
-	Point3D p;
+	private int id=0;
+	private Point3D p;
 	int tag;
 	double weight;
-	HashMap<Integer, NodeData> verticals = new HashMap<>();
+	String s;
+	
 	// a constructor
-	public NodeData(int id,Point3D p) {
-		this.setId(id);
-		this.weight=weight;
+	public NodeData() {
+		this.id=id;
+		this.weight=0;
 		this.p=p;
+		this.tag=0;
+		this.s="";
+		this.id++;
+		
 	}
 
 	// copy construcor
@@ -24,6 +29,16 @@ public class NodeData implements node_data {
 		this.weight=other.weight;
 		this.p=other.p;
 		this.tag=other.tag;
+		this.s=other.s;
+	}
+	
+	NodeData(Point3D p,double weight)
+	{
+		this.id=id;
+		this.weight=weight;
+		this.p=p;
+		this.tag=0;
+		this.id++;
 	}
 
 	@Override
@@ -58,13 +73,13 @@ public class NodeData implements node_data {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		String s = "(" + this.getId() + "," + this.weight + "," + this.p.toString() + ")";
+		
 		return s;
 	}
 
 	@Override
 	public void setInfo(String s) {
-		// TODO Auto-generated method stub
+		this.s=s;
 
 	}
 	@Override
@@ -83,6 +98,10 @@ public class NodeData implements node_data {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String toString()
+	{
+		return "id: "+this.id+"/n"+"weight: "+this.weight+"\n"+"pointlocation: "+this.p+"/n"+"info: "+this.s;
 	}
 
 }
