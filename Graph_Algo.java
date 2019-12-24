@@ -83,17 +83,17 @@ public class Graph_Algo implements graph_algorithms {
 		
 			HashMap<Integer,EdgeData>m=g.edges.get(d.getId());
 			Iterator<Map.Entry<Integer, EdgeData>> itr = m.entrySet().iterator();
-			if(d.getTag()==0)
-			{
+			
 
 			while(itr!=null)
 			{
 				Map.Entry<Integer, EdgeData>entry=itr.next();
+				
 				n.get(entry.getValue().getDest()).setTag(1);
 				
 				
 			}
-			}
+			
 
 
 		
