@@ -10,12 +10,15 @@ public class NodeData implements node_data {
 	Point3D p;
 	int tag;
 	double weight;
+	boolean visited;
+	int previous = -1;
 	HashMap<Integer, NodeData> verticals = new HashMap<>();
 	// a constructor
-	public NodeData(int id,Point3D p) {
-		this.setId(id);
-		this.weight=weight;
+	public NodeData(int id,double weight,Point3D p) {
+		this.id=id;
 		this.p=p;
+		this.weight = weight;
+		visited = false;
 	}
 
 	// copy construcor
@@ -24,6 +27,14 @@ public class NodeData implements node_data {
 		this.weight=other.weight;
 		this.p=other.p;
 		this.tag=other.tag;
+		visited = other.visited;
+	}
+
+	public NodeData(int id, double weight) {
+		// TODO Auto-generated constructor stub
+		this.id = id;
+		this.weight = weight;
+		visited =false;
 	}
 
 	@Override
@@ -58,7 +69,7 @@ public class NodeData implements node_data {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		String s = "(" + this.getId() + "," + this.weight + "," + this.p.toString() + ")";
+		String s = "(" + this.id + "," + this.weight + "," + "Point is"+"("+this.p.toString()+")" + ")";
 		return s;
 	}
 
