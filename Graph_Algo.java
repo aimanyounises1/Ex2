@@ -24,18 +24,25 @@ import dataStructure.node_data;
  * @param <DGraph>
  *
  */
-
-DGraph
 public class Graph_Algo implements graph_algorithms {
-	
 	DGraph g = new DGraph();
-	
+	double[] dis;
+	HashMap<Integer, NodeData> nodes;
+	Collection<node_data> list;
+	Collection<edge_data> l = new LinkedList<>();
+	private Set<Integer> settled;
+	PriorityQueue<NodeData> q = new PriorityQueue<NodeData>();
+	List<node_data> prev;
 	public void init(graph g) {
-		if(g instanceof DGraph)
+		// TODO Auto-generated method stub
 		this.g = (DGraph) g;
-		else
-			throw new RuntimeException("not instance of DGraph");
-		
+		NodeData d;
+		list = g.getV(); 
+		Iterator t=list.iterator();
+		while(t.hasNext()) {
+			d = (NodeData) t.next();
+			nodes.put(d.getId(), d);
+		}
 		
 	}
 
@@ -140,15 +147,49 @@ public class Graph_Algo implements graph_algorithms {
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-	
+		// TODO Auto-generated method stub
+		int n = g.nodeSize();
+		dis = new double[n];
+		l = g.getE(src);
+		for (int i = 0; i < dis.length; i++) {
+			dis[i] = Integer.MAX_VALUE;
+		}
+		dis[src] = 0;
+		q.add((NodeData) g.getNode(src));
+		while(settled.size() != g.nodeSize()) {
+			int u = q.remove().getId();
+			settled.add(u);
+			neigh(u,l);
+		}
+		return dis[dest];
 	}
 	private void neigh(int u,Collection<edge_data> l) {
-		
+		// TODO Auto-generated method stub
+		Iterator<edge_data> t = l.iterator();
+		double edgeWeight = -1;
+		double newWeight = -1;
+		EdgeData e;
+		NodeData d;
+		while(t.hasNext()) {	
+		e = (EdgeData) t.next();
+		d = nodes.get(e.getDest());
+		if(!settled.contains(d.getId())) {
+			edgeWeight = e.getWeight();
+			newWeight = dis[u]+edgeWeight;
+			if(newWeight<dis[d.getId()]) {
+				dis[d.getId()] = newWeight;
+				prev.add(d);
+			}
+			q.add(new NodeData (d.getId(),dis[d.getId()]));
+			
+		}
+		}		
 	}
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
-		
+		shortestPathDist(src,dest);
+		return prev;
 	}
 
 	@Override
@@ -160,7 +201,7 @@ public class Graph_Algo implements graph_algorithms {
 	@Override
 	public graph copy() {
 		// TODO Auto-generated method stub
-		return new DGraph(this.g);
+		return this.g;
 	}
 
 }

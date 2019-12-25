@@ -6,21 +6,19 @@ import java.util.HashMap;
 import utils.Point3D;
 
 public class NodeData implements node_data {
-	private int id=0;
-	private Point3D p;
+	private int id;
+	Point3D p;
 	int tag;
 	double weight;
-	String s;
-	
+	boolean visited;
+	int previous = -1;
+	HashMap<Integer, NodeData> verticals = new HashMap<>();
 	// a constructor
-	public NodeData() {
+	public NodeData(int id,double weight,Point3D p) {
 		this.id=id;
-		this.weight=0;
 		this.p=p;
-		this.tag=0;
-		this.s="";
-		this.id++;
-		
+		this.weight = weight;
+		visited = false;
 	}
 
 	// copy construcor
@@ -29,16 +27,14 @@ public class NodeData implements node_data {
 		this.weight=other.weight;
 		this.p=other.p;
 		this.tag=other.tag;
-		this.s=other.s;
+		visited = other.visited;
 	}
-	
-	NodeData(Point3D p,double weight)
-	{
-		this.id=id;
-		this.weight=weight;
-		this.p=p;
-		this.tag=0;
-		this.id++;
+
+	public NodeData(int id, double weight) {
+		// TODO Auto-generated constructor stub
+		this.id = id;
+		this.weight = weight;
+		visited =false;
 	}
 
 	@Override
@@ -73,13 +69,13 @@ public class NodeData implements node_data {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		
+		String s = "(" + this.id + "," + this.weight + "," + "Point is"+"("+this.p.toString()+")" + ")";
 		return s;
 	}
 
 	@Override
 	public void setInfo(String s) {
-		this.s=s;
+		// TODO Auto-generated method stub
 
 	}
 	@Override
@@ -98,10 +94,6 @@ public class NodeData implements node_data {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String toString()
-	{
-		return "id: "+this.id+"/n"+"weight: "+this.weight+"\n"+"pointlocation: "+this.p+"/n"+"info: "+this.s;
 	}
 
 }
