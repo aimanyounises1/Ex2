@@ -1,25 +1,45 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import utils.Point3D;
 
-public class NodeData implements node_data {
+public class NodeData implements node_data, Serializable {
 	private int id;
-	Point3D p;
+	private Point3D p;
 	int tag;
 	double weight;
-	boolean visited;
-	int previous = -1;
-	HashMap<Integer, NodeData> verticals = new HashMap<>();
+	String s;
+	
+	
 	// a constructor
-	public NodeData(int id,double weight,Point3D p) {
+	public NodeData() {
+		this.id=0;
+		this.weight=0;
+		this.p=null;
+		this.tag=0;
+		this.s="";
+		
+		
+	}
+	public NodeData(int id) {
+		this.id=id;
+		this.weight=0;
+		this.p=null;
+		this.tag=0;
+		this.s="";
+		
+		
+	}
+	public NodeData(int id,Point3D p)
+	{
 		this.id=id;
 		this.p=p;
-		this.weight = weight;
-		visited = false;
+		
 	}
+	
 
 	// copy construcor
 	NodeData(NodeData other) {
@@ -27,14 +47,16 @@ public class NodeData implements node_data {
 		this.weight=other.weight;
 		this.p=other.p;
 		this.tag=other.tag;
-		visited = other.visited;
+		this.s=other.s;
 	}
-
-	public NodeData(int id, double weight) {
-		// TODO Auto-generated constructor stub
-		this.id = id;
-		this.weight = weight;
-		visited =false;
+	
+	NodeData(Point3D p,double weight)
+	{
+		this.id=0;
+		this.weight=weight;
+		this.p=p;
+		this.tag=0;
+		
 	}
 
 	@Override
@@ -69,13 +91,13 @@ public class NodeData implements node_data {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		String s = "(" + this.id + "," + this.weight + "," + "Point is"+"("+this.p.toString()+")" + ")";
+		
 		return s;
 	}
 
 	@Override
 	public void setInfo(String s) {
-		// TODO Auto-generated method stub
+		this.s=s;
 
 	}
 	@Override
@@ -94,6 +116,10 @@ public class NodeData implements node_data {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String toString()
+	{
+		return "id: "+this.id+"\n"+"weight: "+this.weight+"\n"+"pointlocation: "+this.p+"\n"+"info: "+this.s+"\n";
 	}
 
 }
