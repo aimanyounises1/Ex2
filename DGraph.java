@@ -14,9 +14,10 @@ import utils.Point3D;
 public class DGraph implements graph {
 	// search by id and des 
 	HashMap<Integer, EdgeData> inner = new HashMap<>();
-	private HashMap<Integer, HashMap<Integer, EdgeData>> edges;
-	private HashMap<Integer, NodeData> verticals;
+	public HashMap<Integer, HashMap<Integer, EdgeData>> edges;
+	public HashMap<Integer, NodeData> verticals;
 	int changes;
+	private int edgecount;
 
 	public DGraph(DGraph g) {
 		this.verticals = g.verticals;
@@ -30,21 +31,20 @@ public class DGraph implements graph {
 	}
 	public node_data getNode(int key) {
 		// TODO Auto-generated method stub
-		if(verticals.get(key)==null) {
-			System.out.print("Sorry buddy  there is no Node with that key");
-			
-		}
-		node_data node = getVerticals().get(key);
-		return node;
+			if(this.verticals.get(key)==null)
+				return null;
+			NodeData node = verticals.get(key);
+			return node;
 	}
 	@Override
 	
 	public edge_data getEdge(int src, int dest) {
 		// TODO Auto-generated method stub
-		edge_data e = null;
-		if(getEdges().get(src)!=null) {
-		 e =getEdges().get(src).get(dest);
+		EdgeData e = null;
+		if(edges.get(src).get(dest)==null) {
+		 return null;
 		}
+		e =edges.get(src).get(dest);
 		return e;
 	}
 	@Override
@@ -57,14 +57,26 @@ public class DGraph implements graph {
 	@Override
 	public void connect(int src, int dest, double w) {
 		// TODO Auto-generated met hod stub
-		if(verticals.get(src)==null||verticals.get(dest)==null) {
-		throw new RuntimeException("Cant connect this two nodes one or both of them is not exit");
-		}else {
 		EdgeData edge = new EdgeData(src,dest,w);
-		inner = new HashMap<>();
-		inner.put(dest,edge);
-		edges.put(src, inner);
-		changes++;
+		if(this.verticals.get(src)==null||this.verticals.get(dest)==null)
+		{
+			System.out.print("cant connect src or dest are not found in the graph");
+			return;
+		}
+		
+		if(this.edges.get(src)==null)
+		{
+			HashMap<Integer,EdgeData> e=new HashMap<Integer,EdgeData>();
+			e.put(dest, edge);
+			this.edges.put(src, e);
+			this.changes++;
+			this.edgecount++;
+		}
+		else
+		{
+			this.edges.get(src).put(dest, edge);
+			this.changes++;
+			this.edgecount++;
 		}
 	}
 	@Override

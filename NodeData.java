@@ -1,42 +1,47 @@
 package dataStructure;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import utils.Point3D;
 
-public class NodeData implements node_data {
+public class NodeData implements node_data,Comparator<NodeData> {
 	private int id;
 	Point3D p;
+	int pred;
 	int tag;
-	double weight;
 	boolean visited;
-	int previous = -1;
-	HashMap<Integer, NodeData> verticals = new HashMap<>();
+	double dis;
+	double weight;
+	//HashMap<Integer, NodeData> verticals = new HashMap<>();
 	// a constructor
-	public NodeData(int id,double weight,Point3D p) {
-		this.id=id;
-		this.p=p;
-		this.weight = weight;
+	public NodeData(int id,double dis,Point3D p) {
+		this.id = id;
+		this.p = p;
+		this.weight= Integer.MAX_VALUE;
 		visited = false;
+		pred = -1;
 	}
-
 	// copy construcor
-	NodeData(NodeData other) {
+	public NodeData(NodeData other) {
 		this.id=other.id;
-		this.weight=other.weight;
+		this.dis=other.dis;
 		this.p=other.p;
-		this.tag=other.tag;
 		visited = other.visited;
+		this.pred = other.pred;
 	}
-
-	public NodeData(int id, double weight) {
+	public NodeData(int id) {
 		// TODO Auto-generated constructor stub
 		this.id = id;
-		this.weight = weight;
-		visited =false;
+		tag = 0;
+		this.weight = Integer.MAX_VALUE;
+		visited = false;
+		pred = -1;
 	}
-
+	public NodeData () {
+		
+	}
 	@Override
 	public int getKey() {
 		// TODO Auto-generated method stub
@@ -69,7 +74,7 @@ public class NodeData implements node_data {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		String s = "(" + this.id + "," + this.weight + "," + "Point is"+"("+this.p.toString()+")" + ")";
+		String s = "(" + this.id + "," + this.weight + ")";
 		return s;
 	}
 
@@ -88,12 +93,45 @@ public class NodeData implements node_data {
 	public void setTag(int t) {
 		// TODO Auto-generated method stub
 		this.tag = t;
+		
 	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public void setDis(double dis) {
+		this.dis = dis;
+	}
+	public double getDis() {
+		return this.dis;
+	}
+	public boolean isVisited() {
+		return visited;
+	}
+	public void setVisited(boolean visit){
+		visited = visit;
+	}
+	public int getPred() {
+		return this.pred;
+	}
+	public void setPred(int pred) {
+		this.pred = pred;
+	}
+	@Override
+	public int compare(NodeData o1, NodeData o2) {
+		// TODO Auto-generated method stub
+		if(o1.weight<o2.weight) {
+			return -1;
+		}
+		if(o1.weight > o2.weight)	
+		return 1;
+		
+		return 0;
+	}
+	public boolean equal(NodeData a) {
+		return this.id == a.id;
 	}
 
 }

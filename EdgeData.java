@@ -7,7 +7,7 @@ public class EdgeData implements edge_data {
 	int tag;
 
 	// Point3D c = new Point3D(dest.p.x()-1, dest.p.y()-1);
-	EdgeData(int sor, int d,double weight) {
+	public EdgeData(int sor, int d,double weight) {
 		this.dest = d;
 		this.source = sor;
 		this.weight=weight;
