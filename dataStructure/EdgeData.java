@@ -1,10 +1,13 @@
 package dataStructure;
 
-public class EdgeData implements edge_data {
+import java.io.Serializable;
+
+public class EdgeData implements edge_data,Serializable {
 	int dest;
 	int source;
 	double weight;
 	int tag;
+	String s;
 
 	// Point3D c = new Point3D(dest.p.x()-1, dest.p.y()-1);
 	public EdgeData(int sor, int d,double weight) {
@@ -27,45 +30,9 @@ public class EdgeData implements edge_data {
 	}
 	public void setInfo(String s)
 	{
-		String t="";
-		s=s.replace("" , " ");
-		int i=s.indexOf("weight:");
-		i=i+7;
-		while(s.charAt(i)!=','||s.charAt(i)!=s.length())
-		{
-			t=t+s.charAt(i);
-			i++;
-		}
-		 i=s.indexOf("source:");
-		i=i+7;
-		
-		this.weight=Double.parseDouble(t);
-		t="";
-		while(s.charAt(i)!=','||s.charAt(i)!=s.length())
-		{
-			t=t+s.charAt(i);
-			i++;
-		}
-		 i=s.indexOf("destination:");
-		i=i+12;
-		
-		this.source=(int)Double.parseDouble(t);
-		t="";
-		
-		while(i!=s.length()||s.charAt(i)!=s.length())
-		{
-			t=t+s.charAt(i);
-			i++;
-		}
-		i++;
-		
-		this.dest=(int)Double.parseDouble(t);
-		t="";
-		
-		
+		this.s = s;
 		
 	}
-
 	@Override
 	public int getSrc() {
 		// TODO Auto-generated method stub
@@ -87,13 +54,9 @@ public class EdgeData implements edge_data {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		return  "weight: " + this.weight + "source: " + this.source + "destination: " + this.dest;
-	}
+return s;
+		}
 	
-
-	
-	
-
 	@Override
 	public int getTag() {
 		// TODO Auto-generated method stub
@@ -105,5 +68,11 @@ public class EdgeData implements edge_data {
 		// TODO Auto-generated method stub
 		this.tag = t;
 	}
+	public String toString()
+	{
+		return "("+this.source+", "+this.dest+", "+this.weight+")";
+		
+	}
+
 
 }

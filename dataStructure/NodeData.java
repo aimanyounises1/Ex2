@@ -1,45 +1,68 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
 import utils.Point3D;
 
-public class NodeData implements node_data,Comparator<NodeData> {
+public class NodeData implements node_data,Serializable,Comparator<NodeData> {
+	private static int k=0;
 	private int id;
 	Point3D p;
-	int pred;
 	int tag;
-	boolean visited;
-	double dis;
+	String s;
 	double weight;
-	//HashMap<Integer, NodeData> verticals = new HashMap<>();
+	int tag2;
 	// a constructor
-	public NodeData(int id,double dis,Point3D p) {
+	public NodeData(Point3D p) {
+		this.id = k;
+		this.p = p;
+		this.weight= Integer.MAX_VALUE;
+		this.tag=0;
+		k++;
+		
+	}
+	
+	public NodeData(int id,Point3D p) {
 		this.id = id;
 		this.p = p;
 		this.weight= Integer.MAX_VALUE;
-		visited = false;
-		pred = -1;
+		this.tag=0;
+		
 	}
 	// copy construcor
 	public NodeData(NodeData other) {
 		this.id=other.id;
-		this.dis=other.dis;
 		this.p=other.p;
-		visited = other.visited;
-		this.pred = other.pred;
+		this.weight=other.weight;
+		this.s=other.s;
+		this.tag=other.tag;
+		
 	}
-	public NodeData(int id) {
-		// TODO Auto-generated constructor stub
-		this.id = id;
-		tag = 0;
-		this.weight = Integer.MAX_VALUE;
-		visited = false;
-		pred = -1;
-	}
+	
 	public NodeData () {
+		this.id=k;
+		this.tag=0;
+		double x=Math.random()*(700-200)+200;
+
+		double y=Math.random()*(700-200)+200;
+		this.p=new Point3D(x,y);
+		this.weight=Integer.MAX_VALUE;
+		this.s="";
+		k++;
+		
+	}
+	public NodeData (int id) {
+		this.id=id;
+		this.tag=0;
+		double x=Math.random()*(700-400)+400;
+
+		double y=Math.random()*(700-400)+400;
+		this.p=new Point3D(x,y);
+		this.weight=Integer.MAX_VALUE;
+		this.s="";
 		
 	}
 	@Override
@@ -74,13 +97,16 @@ public class NodeData implements node_data,Comparator<NodeData> {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-		String s = "(" + this.id + "," + this.weight + ")";
-		return s;
+	
+		return this.s;
 	}
+
+	
 
 	@Override
 	public void setInfo(String s) {
 		// TODO Auto-generated method stub
+		this.s=s;
 
 	}
 	@Override
@@ -95,30 +121,22 @@ public class NodeData implements node_data,Comparator<NodeData> {
 		this.tag = t;
 		
 	}
+	
+	public int getTag2() {
+		// TODO Auto-generated method stub
+		return this.tag2;
+	}
+
+	
+	public void setTag2(int t) {
+		this.tag2 = t;
+		
+	}
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setDis(double dis) {
-		this.dis = dis;
-	}
-	public double getDis() {
-		return this.dis;
-	}
-	public boolean isVisited() {
-		return visited;
-	}
-	public void setVisited(boolean visit){
-		visited = visit;
-	}
-	public int getPred() {
-		return this.pred;
-	}
-	public void setPred(int pred) {
-		this.pred = pred;
-	}
+	
+
 	@Override
 	public int compare(NodeData o1, NodeData o2) {
 		// TODO Auto-generated method stub
@@ -133,5 +151,13 @@ public class NodeData implements node_data,Comparator<NodeData> {
 	public boolean equal(NodeData a) {
 		return this.id == a.id;
 	}
+	
+	public String toString()
+	{
+		
+		return ""+this.id;
+	}
+	
+	
 
 }
