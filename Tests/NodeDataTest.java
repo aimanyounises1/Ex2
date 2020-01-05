@@ -1,11 +1,26 @@
 package Tests;
 
+
 import static org.junit.Assert.*;
+import dataStructure.DGraph;
+import dataStructure.NodeData;
+import dataStructure.edge_data;
+import dataStructure.graph;
+import dataStructure.node_data;
+import dataStructure.EdgeData;
+
+
 
 import org.junit.Test;
 
-import dataStructure.NodeData;
 import utils.Point3D;
+import dataStructure.DGraph;
+import dataStructure.NodeData;
+import dataStructure.edge_data;
+import dataStructure.graph;
+import dataStructure.node_data;
+import dataStructure.EdgeData;
+import algorithms.Graph_Algo;
 
 public class NodeDataTest {
 	NodeData data,data2,data3;
@@ -29,10 +44,14 @@ public class NodeDataTest {
 		data.setTag(0);
 		data.setWeight(20);
 		assertEquals(data.getKey(), copy.getKey());
-		assertNotEquals(data.getInfo(), copy.getInfo());
-		assertNotEquals(data.getLocation(), copy.getLocation());
-		assertNotEquals(data.getTag(), copy.getTag());
-		assertNotEquals(data.getWeight(), copy.getWeight());
+	     if(!data.getInfo().equals( copy.getInfo()))
+			    fail("Should be euqls");
+
+		if(!data.getLocation().equals(copy.getLocation()))
+	    fail("Should be euqlas");
+
+		assertEquals(data.getTag(), copy.getTag());
+		assertEquals(data.getWeight(), copy.getWeight(),0.000001);
 		
 	}
 

@@ -2,18 +2,21 @@ package Tests;
 
 import static org.junit.Assert.*;
 
+
 import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import dataStructure.DGraph;
-import dataStructure.EdgeData;
 import dataStructure.NodeData;
 import dataStructure.edge_data;
+import dataStructure.graph;
 import dataStructure.node_data;
+import dataStructure.EdgeData;
+
+
 
 
 public class DGraphTest {

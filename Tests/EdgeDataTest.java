@@ -1,14 +1,20 @@
 package Tests;
 
 import static org.junit.Assert.*;
+import dataStructure.DGraph;
+import dataStructure.NodeData;
+import dataStructure.edge_data;
+import dataStructure.graph;
+import dataStructure.node_data;
+import dataStructure.EdgeData;
+
+
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import dataStructure.EdgeData;
 
 public class EdgeDataTest {
 	EdgeData orgin = new EdgeData(1,2, 15);

@@ -1,12 +1,20 @@
 package Tests;
 import static org.junit.Assert.*;
+import dataStructure.DGraph;
+import dataStructure.NodeData;
+import dataStructure.edge_data;
+import dataStructure.graph;
+import dataStructure.node_data;
+import gui.Graph_GUI;
+import dataStructure.EdgeData;
+import algorithms.Graph_Algo;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import dataStructure.NodeData;
 import dataStructure.graph;
@@ -116,4 +124,132 @@ public class Graph_AlgoTest {
 			assertTrue(data.getKey()==g1.getNode(data.getKey()).getKey());
 		}
 	}
+	
+	
+	@Test
+	public void saveinitfile() {
+		DGraph gg=new DGraph();
+		DGraph g1=new DGraph();
+
+		NodeData d0 = new NodeData(0);
+		NodeData d1 = new NodeData(1);
+		NodeData d2 = new NodeData(2);
+		NodeData d3 = new NodeData(3);
+		NodeData d4 = new NodeData(4);
+		NodeData d5 = new NodeData(5);
+		gg.addNode(d1);
+		gg.addNode(d2);
+		gg.addNode(d3);
+	gg.addNode(d4);
+		gg.addNode(d5);
+
+		
+	gg.connect(1, 2, 3);
+	gg.connect(2, 1, 4);
+	gg.connect(3, 4, 5);
+	gg.connect(4,3, 7);
+	gg.connect(3,2, 4);
+	gg.connect(3,1, 5);
+	gg.connect(1,3, 2);
+	gg.connect(5, 1, 1);
+	gg.connect(1, 5, 5);
+	
+	Graph_Algo ggg=new Graph_Algo();
+	ggg.init(gg);
+	ggg.save("txt.txt");
+	Graph_Algo gggg=new Graph_Algo();
+	gggg.init("txt.txt");
+	g1=(DGraph)gggg.copy();
+	boolean t=false;
+for(node_data n:gg.getV())
+	if(g1.getNode(n.getKey())==null)
+	    fail("nodes Should be equals");
+
+	for(node_data n:g1.getV())
+		for(edge_data e:g1.getE(n.getKey()))
+		{
+			for(edge_data e1:gg.getE(n.getKey()))
+				if(e1.equals(e))
+				{
+					t=true;
+					break;
+				}
+			if(t=false)
+			    fail("edges Should be equals");
+
+		}
+
+	
+
+
+
+}
+	
+	
+	@Test
+	public void TSPtest() {
+		DGraph gg = new DGraph();
+		Graph_Algo g1 = new Graph_Algo();
+		Graph_Algo g2 = new Graph_Algo();
+
+
+		Graph_GUI graph;
+		NodeData d0 = new NodeData(0);
+		NodeData d1 = new NodeData(1);
+		NodeData d2 = new NodeData(2);
+		NodeData d3 = new NodeData(3);
+		NodeData d4 = new NodeData(4);
+		NodeData d5 = new NodeData(5);
+		gg.addNode(d1);
+		gg.addNode(d2);
+		gg.addNode(d3);
+	gg.addNode(d4);
+		gg.addNode(d5);
+
+		
+	gg.connect(1, 2, 3);
+	gg.connect(2, 1, 4);
+	gg.connect(3, 4, 5);
+	gg.connect(4,3, 7);
+	gg.connect(3,2, 4);
+	gg.connect(3,1, 5);
+	gg.connect(1,3, 2);
+	gg.connect(5, 1, 1);
+	gg.connect(1, 5, 5);
+	g1.init(gg);
+
+	
+
+
+
+
+
+
+		
+	ArrayList <Integer>arr=new ArrayList<Integer>();
+	arr.add(1);
+	arr.add(2);
+	arr.add(3);
+	
+	ArrayList <node_data>arr2=new ArrayList<node_data>();
+	ArrayList <node_data>arr3=(ArrayList<node_data>)g1.TSP(arr);
+	arr3.add(d1);
+	arr3.add(d3);
+	arr3.add(d2);
+	
+	for(int i=0;i<arr2.size();i++)
+		if(arr2.get(i)!=arr3.get(i))
+		    fail("nodes Should be equals");
+
+		
+
+	
+
+     	 		
+
+	}
+	
+	
+	
+	
 }
