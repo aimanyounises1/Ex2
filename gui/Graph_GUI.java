@@ -158,7 +158,7 @@ public class Graph_GUI extends JFrame implements ActionListener,MouseListener{
 			int y = n.getLocation().iy();
 			g2.fillOval(x, y, 14, 14);
 
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.black);
 			g2.setFont(new Font("Arial", Font.BOLD, 13));
 			g2.drawString(n.getKey() + "", x + 16, y + 16);
 
@@ -174,10 +174,10 @@ public class Graph_GUI extends JFrame implements ActionListener,MouseListener{
 						g2.setFont(new Font("Arial", Font.BOLD, 15));
 						g2.setColor(Color.RED);
 						g2.drawString("" + edge.getWeight(), (int) (x + x1) / 2 - 5, (int) ((y + y1) / 2 - 5));
-						g2.setColor(Color.BLACK);
+						g2.setColor(Color.yellow);
 						x1 = (int) ((((x + x1) / 2 + x1) / 2 + x1) / 2 + x1) / 2;
 						y1 = (int) ((((y + y1) / 2 + y1) / 2 + y1) / 2 + y1) / 2;
-						g2.fillOval(x1, y1, 7, 7);
+						g2.fillOval(x1, y1, 10, 10);
 					}
 				}
 			}
