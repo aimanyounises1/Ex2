@@ -59,7 +59,7 @@ class Ex2Test {
 	}
 	boolean drawGraph(graph g) { 
 		
-		DGraph gg = new DGraph();
+		 g = new DGraph();
 		Graph_Algo g1 = new Graph_Algo();
 
 
@@ -70,22 +70,22 @@ class Ex2Test {
 		NodeData d3 = new NodeData(3);
 		NodeData d4 = new NodeData(4);
 		NodeData d5 = new NodeData(5);
-		gg.addNode(d1);
-		gg.addNode(d2);
-		gg.addNode(d3);
-	gg.addNode(d4);
-		gg.addNode(d5);
+		g.addNode(d1);
+		g.addNode(d2);
+		g.addNode(d3);
+	g.addNode(d4);
+		g.addNode(d5);
 
 		
-	gg.connect(1, 2, 3);
-	gg.connect(2, 1, 4);
-	gg.connect(3, 4, 5);
-	gg.connect(4,3, 7);
-	gg.connect(3,2, 4);
-	gg.connect(3,1, 5);
-	gg.connect(1,3, 2);
-	gg.connect(5, 1, 1);
-	gg.connect(1, 5, 5);
+	g.connect(1, 2, 3);
+	g.connect(2, 1, 4);
+	g.connect(3, 4, 5);
+	g.connect(4,3, 7);
+	g.connect(3,2, 4);
+	g.connect(3,1, 5);
+	g.connect(1,3, 2);
+	g.connect(5, 1, 1);
+	g.connect(1, 5, 5);
 
 	
 
@@ -107,11 +107,11 @@ class Ex2Test {
 
 
 
-			
 
 
 
-				Graph_GUI ggg=new Graph_GUI(gg);
+				Graph_GUI ggg=new Graph_GUI((DGraph)g);
+				
 			ggg.setVisible(true);
 			
 		return true;
