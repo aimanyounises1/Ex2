@@ -15,7 +15,7 @@ public class NodeData implements node_data,Serializable,Comparator<NodeData> {
 	String s;
 	double weight;
 	int tag2;
-	// a constructor
+	// a constructor that lets you decide the location and gives you an id 
 	public NodeData(Point3D p) {
 		this.id = k;
 		this.p = p;
@@ -24,7 +24,7 @@ public class NodeData implements node_data,Serializable,Comparator<NodeData> {
 		k++;
 		
 	}
-	
+	// constructer that lets you decid whats the id and location
 	public NodeData(int id,Point3D p) {
 		this.id = id;
 		this.p = p;
@@ -41,6 +41,7 @@ public class NodeData implements node_data,Serializable,Comparator<NodeData> {
 		this.tag=other.tag;
 		
 	}
+	//defaulr constructer that sets and id and a random location
 	
 	public NodeData () {
 		this.id=k;
@@ -54,6 +55,7 @@ public class NodeData implements node_data,Serializable,Comparator<NodeData> {
 		k++;
 		
 	}
+	//conmstructer that letsyou decide the id but sets a random location
 	public NodeData (int id) {
 		this.id=id;
 		this.tag=0;
@@ -157,7 +159,14 @@ public class NodeData implements node_data,Serializable,Comparator<NodeData> {
 		
 		return ""+this.id;
 	}
-	
+	public boolean equals(NodeData n)
+	{
+		if(this.id!=n.id||this.p!=this.p)
+			return false;
+		return true;
+			
+	}
+
 	
 
 }

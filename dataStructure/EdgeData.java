@@ -30,9 +30,12 @@ public class EdgeData implements edge_data,Serializable {
 	}
 	public void setInfo(String s)
 	{
-		this.s = s;
+		
 		
 	}
+	
+	
+
 	@Override
 	public int getSrc() {
 		// TODO Auto-generated method stub
@@ -54,9 +57,15 @@ public class EdgeData implements edge_data,Serializable {
 	@Override
 	public String getInfo() {
 		// TODO Auto-generated method stub
-return s;
-		}
+		return "source: " +this.source+"\n"+"dest: "+this.dest+"\n"+"weight: "+this.weight+"\n"+"info: "+this.s+"\n";
+	}
 	
+	
+	
+
+	
+	
+
 	@Override
 	public int getTag() {
 		// TODO Auto-generated method stub
@@ -65,13 +74,20 @@ return s;
 
 	@Override
 	public void setTag(int t) {
-		// TODO Auto-generated method stub
 		this.tag = t;
 	}
 	public String toString()
 	{
 		return "("+this.source+", "+this.dest+", "+this.weight+")";
 		
+	}
+	
+	public boolean equals(EdgeData e)
+	{
+		if(this.source!=e.source||this.dest!=e.dest||this.weight!=e.weight)
+			return false;
+		return true;
+			
 	}
 
 

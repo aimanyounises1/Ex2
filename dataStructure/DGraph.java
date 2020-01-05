@@ -17,9 +17,9 @@ import utils.Point3D;
 public class DGraph implements graph,Serializable {
 	// search by id and des 
 	HashMap<Integer, EdgeData> inner = new HashMap<>();
-	public HashMap<Integer, HashMap<Integer, EdgeData>> edges=new HashMap<Integer, HashMap<Integer, EdgeData>>();
-	public HashMap<Integer, NodeData> verticals=new HashMap<Integer,NodeData>();
-	int changes=0;
+	 HashMap<Integer, HashMap<Integer, EdgeData>> edges=new HashMap<Integer, HashMap<Integer, EdgeData>>();
+	 HashMap<Integer, NodeData> verticals=new HashMap<Integer,NodeData>();
+	 int changes=0;
 	private int edgecount;
 //copy constructor to copy verticals hashmap and edges
 	public DGraph(DGraph g) {
@@ -38,22 +38,24 @@ public class DGraph implements graph,Serializable {
 	}
 	// default constructor
 	public DGraph() {
-		// TODO Auto-generated constructor stub
 		verticals = new HashMap<Integer, NodeData>();
 		edges = new HashMap<Integer, HashMap<Integer, EdgeData>>();
 		this.changes = 0;
 		this.edgecount = 0;
 	}
+	
+	//gets the node with the id key
+	@Override
 	public node_data getNode(int key) {
-		// TODO Auto-generated method stub
 		if (this.verticals.get(key) == null)
 			return null;
 		NodeData node = verticals.get(key);
 		return node;
 	}
+	
 	@Override
+	//gets the edge that connects src and dest nodes
 	public edge_data getEdge(int src, int dest) {
-		// TODO Auto-generated method stub
 		EdgeData e = null;
 		if (edges.get(src).get(dest) == null) {
 			return null;
@@ -61,6 +63,7 @@ public class DGraph implements graph,Serializable {
 		e = edges.get(src).get(dest);
 		return e;
 	}
+	//addds a node
 	@Override
 	public void addNode(node_data n) {
 		// TODO Auto-generated method stub
@@ -68,11 +71,13 @@ public class DGraph implements graph,Serializable {
 		verticals.put(d.getId(),d);
 		changes++;
 	}
+	
+	//add an edge that connects betweet src and dest with weight w
 	@Override
 	public void connect(int src, int dest, double w) {
 		// TODO Auto-generated met hod stub
 		EdgeData edge = new EdgeData(src, dest, w);
-
+// if src and dest nodes are not in the graph returns a message
 		if (this.verticals.get(src) == null || this.verticals.get(dest) == null) {
 			System.out.print("cant connect src or dest are not found in the graph");
 			return;
@@ -90,6 +95,8 @@ public class DGraph implements graph,Serializable {
 			this.edgecount++;
 		}
 	}
+	
+	//get a list of all the nodes in the hashmap verticals
 	@Override
 	public Collection<node_data> getV() {
 		// TODO Auto-generated method stub
@@ -99,6 +106,8 @@ public class DGraph implements graph,Serializable {
 		}
 		return l;
 	}
+	
+	//removes node with id key and all the edges that connects it 
 	@Override
 	public node_data removeNode(int key) {
 		if (this.verticals.get(key) == null) {
@@ -126,6 +135,7 @@ public class DGraph implements graph,Serializable {
 		return d;
 
 	}
+	//remove and edge that connects between node src and noded dest
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		EdgeData e = null;

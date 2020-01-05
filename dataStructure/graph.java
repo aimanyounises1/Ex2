@@ -1,5 +1,4 @@
 package dataStructure;
-import java.util.ArrayList;
 import java.util.Collection;
 /**
  * This interface represents a directional weighted graph.
@@ -43,6 +42,7 @@ public interface graph {
 	 * Note: this method should run in O(1) time.
 	 * @return Collection<node_data>
 	 */
+	public Collection<node_data> getV();
 	/**
 	 * This method return a pointer (shallow copy) for the
 	 * collection representing all the edges getting out of 
@@ -83,5 +83,4 @@ public interface graph {
  * @return
  */
 	public int getMC();
-public Collection<node_data> getV();
 }
