@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import dataStructure.DGraph;
@@ -17,6 +19,7 @@ import dataStructure.NodeData;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
+import utils.Point3D;
 
 /**
  * This empty class represents the set of graph-theory algorithms
@@ -40,11 +43,21 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			throw new RuntimeException("not instance of DGraph");
 
 	}
+	
+	public Graph_Algo(graph g) {
+		if (g instanceof DGraph) {
+			this.g = (DGraph) g;
+			this.g1 = g;
+
+		} else
+			throw new RuntimeException("not instance of DGraph");
+
+	}
 
 	public Graph_Algo() {
 		this.g = new DGraph();
 	}
-
+// initiats the graph using sirilizable 
 	@Override
 	public void init(String file_name) {
 
@@ -67,6 +80,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	//saves the graph in a file using seriliozable
 
 	@Override
 	public void save(String file_name) {
@@ -85,8 +100,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 
 	}
-
-	public void checkneigh(node_data i) {
+//sets the node i's tag to 2 and all its neighbours's tags to 1 if thier tag is 0
+	private void checkneigh(node_data i) {
 		g.getNode(i.getKey()).setTag(2);
 		if (g.getE(i.getKey()) != null) {
 
@@ -97,21 +112,22 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 
 	}
-
+//checks of all the nodes's tags are 2 or not
 	private boolean alltag() {
 		for (node_data n : g.getV())
 			if (n.getTag() != 2)
 				return false;
 		return true;
 	}
-
-	public boolean cont() {
+//checks if theres a node with tag 1 if so it returns true otherwise false
+	private boolean cont() {
 		for (node_data n : g.getV())
 			if (n.getTag() == 1)
 				return true;
 		return false;
 	}
 
+	//if the graph is connected it returns true otherwise false it does so by checking if we can get from each node in the graph to all the other nodes
 	@Override
 	public boolean isConnected() {
 		for (node_data nn : g.getV()) {
@@ -280,7 +296,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return d;
 	}
-
+//returns true if theres a node in dgraph d that doesnt have a tag of 1 
 	private boolean allnottag(DGraph d) {
 		for (node_data n : d.getV()) {
 			if (n.getTag() != 1)
@@ -289,7 +305,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return false;
 	}
-
+// creates a graph that is contained in the original graph which consists of only the nodes in targets and only the edges that connects between them and it returns the shortest path which goes through all the nodes and if the nodes arent connected it returns an error
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		DGraph d = trans2(targets);
@@ -345,11 +361,30 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 		return a;
 	}
-
+	
+	
+	
 	@Override
+	//copies the graph g to another graph
 	public graph copy() {
-
-		return new DGraph((DGraph) this.g);
+		graph g=new DGraph();
+		for(node_data nn: this.g.getV()) {
+			node_data n=new NodeData(nn.getKey());
+			n.setInfo(nn.getInfo());
+			n.setTag(nn.getTag());
+			n.setWeight(nn.getWeight());
+			n.setLocation(new Point3D(nn.getLocation()));
+			g.addNode(n);
+		}
+		for(node_data nn: g.getV()) {
+			Collection<edge_data> edges=g.getE(nn.getKey());
+			Iterator<edge_data> itr=edges.iterator();
+			while(itr.hasNext()) {
+				edge_data e=itr.next();
+				g.connect(e.getSrc(),e.getDest(),e.getWeight());
+			}
+		}
+		return g;
 	}
 
 }
